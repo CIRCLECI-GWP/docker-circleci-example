@@ -30,10 +30,9 @@ new Docker Buildx Action. This is going to let us achieve a couple awesome outco
   number of improvements over the default `docker build`. [Here.](https://github.com/metcalfc/docker-action-examples/blob/main/.github/workflows/release.yml#L40-L42)
 - We are going to setup buildx caching to take advantage of the where possible with Circle's caching (paid feature).
   You should see build performance improvements when repeating builds with common
-  layers. 
+  layers.
 - We are going to setup QEMU to do cross platform builds. In the example, we'll
-  build this application for every Linux architecture that Docker Hub supports. 
-  
+  build this application for every Linux architecture that Docker Hub supports.
 
 I'm not going to implement CD for this example.
 Mostly because I don't want to leave an Amazon ECS cluster running. But you can
@@ -45,29 +44,28 @@ see a demo of this in one of my past streams: https://www.youtube.com/watch?v=Rf
 
 Project structure:
 
-```
+```yaml
 .
 ├── docker-compose.yaml
 ├── app
-    ├── Dockerfile
-    ├── requirements.txt
-    └── app.py
-
+├── Dockerfile
+├── requirements.txt
+└── app.py
 ```
 
 [_docker-compose.yaml_](docker-compose.yaml)
 
-```
+```yaml
 services:
   web:
     build: app
     ports:
-      - '5000:5000'
+      - "5000:5000"
 ```
 
 ## Deploy with docker-compose
 
-```
+```bash
 $ docker-compose up -d
 Creating network "flask_default" with the default driver
 Building web
@@ -83,7 +81,7 @@ Creating flask_web_1 ... done
 
 Listing containers must show one container running and the port mapping as below:
 
-```
+```bash
 $ docker ps
 CONTAINER ID        IMAGE                        COMMAND                  CREATED             STATUS              PORTS                  NAMES
 c126411df522        flask_web                    "python3 app.py"         About a minute ago  Up About a minute   0.0.0.0:5000->5000/tcp flask_web_1
@@ -91,13 +89,13 @@ c126411df522        flask_web                    "python3 app.py"         About 
 
 After the application starts, navigate to `http://localhost:5000` in your web browser or run:
 
-```
+```bash
 $ curl localhost:5000
 Hello Docker and GitHub!
 ```
 
 Stop and remove the containers
 
-```
+```bash
 $ docker-compose down
 ```

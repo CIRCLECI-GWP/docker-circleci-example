@@ -9,7 +9,7 @@ ifeq ($(GIT_TAG),)
 endif
 
 # Docker image tagging:
-HUB_USER?=metcalfc
+HUB_USER?=yemiwebby
 
 # When you create your secret use the DockerHub in the name and this will find it
 HUB_PULL_SECRET?=$(shell docker secret list | grep arn | grep DockerHub | cut -f1 -d' ')
